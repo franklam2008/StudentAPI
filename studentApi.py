@@ -10,6 +10,7 @@ STUDENTS = {
     '4': {'name': 'Kate', 'age': 22, 'spec': 'science'},
 }
 
+# student list
 
 class StudentsList(Resource):
     def get(self):
