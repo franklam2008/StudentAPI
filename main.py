@@ -3,14 +3,19 @@ from flask_restful import Resource, Api
 
 app = Flask(__name__)
 api = Api(app)
+
+# mock students list
+
 STUDENTS = {
     '1': {'name': 'Mark', 'age': 23, 'spec': 'math'},
     '2': {'name': 'Jane', 'age': 20, 'spec': 'biology'},
     '3': {'name': 'Peter', 'age': 21, 'spec': 'history'},
     '4': {'name': 'Kate', 'age': 22, 'spec': 'science'},
+    '5': {'name': 'John', 'age': 42, 'spec': 'Spanish'},
 }
 
 # student list
+
 
 class StudentsList(Resource):
     def get(self):
@@ -23,12 +28,13 @@ class StudentsList(Resource):
 
         student_id = int(max(STUDENTS.keys())) + 1
         student_id = '%i' % student_id
-        STUDENTS[student_id] = {
-            "name": name,
-            "age": age,
-            "spec": spec,
-        }
+
         if name and age and spec:
+            STUDENTS[student_id] = {
+                "name": name,
+                "age": age,
+                "spec": spec,
+            }
             return STUDENTS[student_id], 201
         else:
             return "Args ERROR", 404
