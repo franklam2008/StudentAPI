@@ -13,19 +13,31 @@ key = "SUPER_TEST_SECRET"
 
 
 class Login(Resource):
-    def put(self):
+    def post(self):
         foundUser = {}
         name = request.args.get('username')
         pw = request.args.get('password')
         for each in USER_LOGINS:
             if found_user(each, name, pw):
                 foundId = each["uuid"]
-                found_detail = USER_DETAILS[foundId]
-                encoded = jwt.encode(found_detail, key, algorithm="HS256")
-                foundUser = jwt.decode(encoded, key, algorithms="HS256")
+                foundUser = USER_DETAILS[foundId]
+                encoded = jwt.encode(foundUser, key, algorithm="HS256")
                 break
 
         # PUT call Response
+
+        if foundUser:
+            foundUser['jwt'] = encoded
+            return foundUser, 200
+        else:
+            return "", 404
+
+    # GET user detail from token
+    def get(self):
+        foundUser = {}
+        jwt_from_cookie = request.args.get('jwt')
+        if jwt_from_cookie:
+            foundUser = jwt.decode(jwt_from_cookie, key, algorithms="HS256")
 
         if foundUser:
             return foundUser, 200
