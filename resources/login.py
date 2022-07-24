@@ -1,6 +1,6 @@
 import jwt
 from flask_restful import Resource
-from flask import request
+from flask import after_this_request, request
 from data.user_details import USER_DETAILS
 from data.user_logins import USER_LOGINS
 
@@ -15,10 +15,10 @@ key = "SUPER_TEST_SECRET"
 class Login(Resource):
     def post(self):
         foundUser = {}
-        name = request.args.get('username')
+        email = request.args.get('email')
         pw = request.args.get('password')
         for each in USER_LOGINS:
-            if found_user(each, name, pw):
+            if found_user(each, email, pw):
                 foundId = each["uuid"]
                 foundUser = USER_DETAILS[foundId]
                 encoded = jwt.encode(foundUser, key, algorithm="HS256")
@@ -28,6 +28,16 @@ class Login(Resource):
 
         if foundUser:
             foundUser['jwt'] = encoded
+       
+            # PUT call add Cookies
+            @after_this_request
+            def set_cookie_value(response):
+                response.set_cookie('ENCODED_TOKEN', str(
+                    encoded), max_age=44, httponly=True)
+                response.set_cookie('USERNAME', str(
+                    foundUser['username']), max_age=44, httponly=True)
+                return response
+
             return foundUser, 200
         else:
             return "", 404
@@ -35,18 +45,19 @@ class Login(Resource):
     # GET user detail from token
     def get(self):
         foundUser = {}
-        token = request.args.get('token')
+        token = request.cookies.get('ENCODED_TOKEN')
+
         if token:
             foundUser = jwt.decode(token, key, algorithms="HS256")
 
         if foundUser:
             return foundUser, 200
         else:
-            return "", 404
+            return "Token not found, User is not logged in", 404
 
 
-def found_user(each, name, pw):
-    if each["username"] == name and each["password"] == pw:
+def found_user(each, email, pw):
+    if each["email"] == email and each["password"] == pw:
         return True
     else:
         return False

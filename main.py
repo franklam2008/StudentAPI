@@ -6,7 +6,7 @@ from resources.login import Login
 from resources.studentClass import Student
 from resources.studentsListClass import StudentsList
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='template')
 api = Api(app)
 
 # Add classes
