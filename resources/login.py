@@ -3,11 +3,12 @@ from flask_restful import Resource
 from flask import after_this_request, request
 from data.user_details import USER_DETAILS
 from data.user_logins import USER_LOGINS
+from decouple import config
 
 # JWT authentication
 # =================================================
 
-key = "SUPER_TEST_SECRET"
+JWT_KEY = config('JWT_KEY')
 COOKIES_AGE = 60 * 60 * 1000
 
 # Find users with input
@@ -22,7 +23,7 @@ class Login(Resource):
             if found_user(each, email, pw):
                 foundId = each["uuid"]
                 foundUser = USER_DETAILS[foundId]
-                encoded = jwt.encode(foundUser, key, algorithm="HS256")
+                encoded = jwt.encode(foundUser, JWT_KEY, algorithm="HS256")
 
                 # decode bytes to string for pythonanywhere
                 # =================================================
@@ -54,7 +55,7 @@ class Login(Resource):
         token = request.cookies.get('ENCODED_TOKEN')
 
         if token:
-            foundUser = jwt.decode(token, key, algorithms="HS256")
+            foundUser = jwt.decode(token, JWT_KEY, algorithms="HS256")
 
         if foundUser:
             return foundUser, 200
