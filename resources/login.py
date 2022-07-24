@@ -35,9 +35,9 @@ class Login(Resource):
     # GET user detail from token
     def get(self):
         foundUser = {}
-        jwt_from_cookie = request.args.get('jwt')
-        if jwt_from_cookie:
-            foundUser = jwt.decode(jwt_from_cookie, key, algorithms="HS256")
+        token = request.args.get('token')
+        if token:
+            foundUser = jwt.decode(token, key, algorithms="HS256")
 
         if foundUser:
             return foundUser, 200
