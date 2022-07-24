@@ -51,6 +51,13 @@ class Login(Resource):
 
             return {'message': 'login success'}, 200
         else:
+             # Remove Cookies if user not found
+            @after_this_request
+            def set_cookie_value(response):
+                response.set_cookie('ENCODED_TOKEN', '', expires=0)
+                response.set_cookie('USERNAME', '', expires=0)
+                return response
+          
             return "", 404
 
     # GET user detail from token
