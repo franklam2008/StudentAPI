@@ -1,25 +1,18 @@
-from flask import Flask, request
-from flask_restful import Resource, Api
+from flask import Flask
+from flask_restful import Api
 
-from studentClass import Student
-from studentsData import STUDENTS
-from studentsListClass import StudentsList
-
-import jwt
+# Resources
+from resources.login import Login
+from resources.studentClass import Student
+from resources.studentsListClass import StudentsList
 
 app = Flask(__name__)
 api = Api(app)
 
-# JWT authentication
+# Add classes
 # =================================================
-payload = {"username": "Frank Lam", "role": "admin"}
-key = "SUPER_TEST_SECRET"
-encoded = jwt.encode(payload, key, algorithm="HS256")
-print('!!!encoded', encoded)
-test = jwt.decode(encoded, key, algorithms="HS256")
-print('!!!test payload', test)
 
-
+api.add_resource(Login, '/login/')
 api.add_resource(StudentsList, '/students/')
 api.add_resource(Student, '/students/<student_id>')
 
@@ -27,6 +20,8 @@ api.add_resource(Student, '/students/<student_id>')
 if __name__ == "__main__":
     app.run(debug=True)
 
+# MySQL
+# =================================================
 
 # import mysql.connector
 # mydb = mysql.connector.connect(
