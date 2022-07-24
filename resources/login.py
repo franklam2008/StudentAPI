@@ -27,8 +27,7 @@ class Login(Resource):
         # PUT call Response
 
         if foundUser:
-            foundUser['jwt'] = encoded
-       
+
             # Set Cookies for response header
             @after_this_request
             def set_cookie_value(response):
@@ -38,7 +37,7 @@ class Login(Resource):
                     foundUser['username']), max_age=44, httponly=True)
                 return response
 
-            return foundUser, 200
+            return {'message': 'login success'}, 200
         else:
             return "", 404
 
