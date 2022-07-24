@@ -8,6 +8,7 @@ from data.user_logins import USER_LOGINS
 # =================================================
 
 key = "SUPER_TEST_SECRET"
+AGE = 60 * 60 * 1000
 
 # Find users with input
 
@@ -38,9 +39,9 @@ class Login(Resource):
             @after_this_request
             def set_cookie_value(response):
                 response.set_cookie('ENCODED_TOKEN', str(
-                    encoded), max_age=44, httponly=True)
+                    encoded), max_age=AGE, httponly=True)
                 response.set_cookie('USERNAME', str(
-                    foundUser['username']), max_age=44, httponly=True)
+                    foundUser['username']), max_age=AGE, httponly=True)
                 return response
 
             return {'message': 'login success'}, 200
