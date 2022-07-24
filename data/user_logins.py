@@ -13,5 +13,10 @@ USER_LOGINS = [
         "uuid": "003",
         "email": "ben@gmail.com",
         "password": "1234qwer",
+    },
+    {
+        "uuid": "004",
+        "email": "nick@gmail.com",
+        "password": "1234qwer",
     }
 ]

@@ -3,6 +3,7 @@ from flask_restful import Resource
 from flask import after_this_request, request
 from data.user_details import USER_DETAILS
 from data.user_logins import USER_LOGINS
+from resources.helpers.helpers import found_user
 # from dotenv import dotenv_values
 
 
@@ -64,10 +65,3 @@ class Login(Resource):
             return foundUser, 200
         else:
             return "Token not found, User is not logged in", 404
-
-
-def found_user(each, email, pw):
-    if each["email"] == email and each["password"] == pw:
-        return True
-    else:
-        return False

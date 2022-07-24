@@ -19,5 +19,12 @@ USER_DETAILS = {
         "email": "ben@gmail.com",
         "capabilities": "VIEW",
         "role": "student"
+    },
+    "004":  {
+        "uuid": "003",
+        "username": "Nick",
+        "email": "nick@gmail.com",
+        "capabilities": "NONE",
+        "role": "student"
     }
 }
