@@ -29,7 +29,7 @@ class Login(Resource):
         if foundUser:
             foundUser['jwt'] = encoded
        
-            # PUT call add Cookies
+            # Set Cookies for response header
             @after_this_request
             def set_cookie_value(response):
                 response.set_cookie('ENCODED_TOKEN', str(
