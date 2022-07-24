@@ -1,7 +1,7 @@
 
 from flask import Flask, request
 from flask_restful import Resource, Api
-from data.studentsData import STUDENTS
+from data.students import STUDENTS
 
 
 class Student(Resource):
