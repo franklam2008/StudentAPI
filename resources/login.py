@@ -22,6 +22,12 @@ class Login(Resource):
                 foundId = each["uuid"]
                 foundUser = USER_DETAILS[foundId]
                 encoded = jwt.encode(foundUser, key, algorithm="HS256")
+
+                # decode bytes to string for pythonanywhere
+                # =================================================
+                if isinstance(encoded, bytes):
+                    encoded = encoded.decode('utf-8')
+
                 break
 
         # PUT call Response
