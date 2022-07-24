@@ -3,12 +3,13 @@ from flask_restful import Resource
 from flask import after_this_request, request
 from data.user_details import USER_DETAILS
 from data.user_logins import USER_LOGINS
-from decouple import config
+# from decouple import config
 
 # JWT authentication
 # =================================================
 
-JWT_KEY = config('JWT_KEY')
+# use decouple and import env file
+JWT_KEY = "SUPER_JWT_SECREY_KEY_GSEGAWDAFAWF"
 COOKIES_AGE = 60 * 60 * 1000
 
 # Find users with input
