@@ -1,7 +1,8 @@
 
-from flask import Flask, request
-from flask_restful import Resource, Api
+from flask import request
+from flask_restful import Resource
 from data.students import STUDENTS
+
 
 class StudentsList(Resource):
     def get(self):
@@ -24,4 +25,3 @@ class StudentsList(Resource):
             return STUDENTS[student_id], 201
         else:
             return "Args ERROR", 404
-
