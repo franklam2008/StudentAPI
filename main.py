@@ -1,12 +1,13 @@
 from flask import Flask
 from flask_restful import Api
-
+from flask_cors import CORS
 # Resources
 from resources.login import Login
 from resources.studentClass import Student
 from resources.studentsListClass import StudentsList
 
-app = Flask(__name__,template_folder='template')
+app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 # Add classes

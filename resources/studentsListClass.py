@@ -7,10 +7,10 @@ from resources.helpers.helpers import check_required_cap
 
 class StudentsList(Resource):
     def get(self):
-        error = check_required_cap(
-            "VIEW",  request.cookies.get('ENCODED_TOKEN'))
-        if error:
-            return error, 404
+        # error = check_required_cap(
+        #     "VIEW",  request.cookies.get('ENCODED_TOKEN'))
+        # if error:
+        #     return error, 404
 
         return STUDENTS, 200
 
