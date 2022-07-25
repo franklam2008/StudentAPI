@@ -4,15 +4,15 @@ from flask import after_this_request, request
 from data.user_details import USER_DETAILS
 from data.user_logins import USER_LOGINS
 from resources.helpers.helpers import found_user
-# from dotenv import dotenv_values
+from dotenv import dotenv_values
 
 
 # JWT authentication
 # =================================================
 
-# config = dotenv_values(".env")
-# JWT_KEY = config['JWT_KEY']
-JWT_KEY = 'SUPER_JWT_SECREY_KEY_GSEGAWDAFAWF'
+config = dotenv_values(".env")
+JWT_KEY = config['JWT_KEY']
+# JWT_KEY = 'SUPER_JWT_SECREY_KEY_GSEGAWDAFAWF'
 COOKIES_AGE = 60 * 60 * 1000
 
 # Find users with input
@@ -47,6 +47,7 @@ class Login(Resource):
                     encoded), max_age=COOKIES_AGE, httponly=True)
                 response.set_cookie('USERNAME', str(
                     foundUser['username']), max_age=COOKIES_AGE, httponly=True)
+
                 return response
             return {'message': 'login success'}, 200
         else:
@@ -56,13 +57,14 @@ class Login(Resource):
                 response.set_cookie('ENCODED_TOKEN', '', expires=0)
                 response.set_cookie('USERNAME', '', expires=0)
                 return response
-            return "", 404
+
+            return "Username or Password incorrect", 404
 
     # GET user detail from token
     def get(self):
         foundUser = {}
         token = request.cookies.get('ENCODED_TOKEN')
-
+        print('!!!', token)
         if token:
             foundUser = jwt.decode(token, JWT_KEY, algorithms="HS256")
 
