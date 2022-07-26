@@ -1,5 +1,5 @@
 import jwt
-JWT_KEY = 'SUPER_JWT_SECREY_KEY_GSEGAWDAFAWF'
+from data.keys import JWT_KEY
 
 
 def found_user(each, email, pw):
