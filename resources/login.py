@@ -10,6 +10,8 @@ from resources.helpers.helpers import found_user
 COOKIES_AGE = 60 * 60 * 1000
 
 # Find users with input
+
+
 class Login(Resource):
     def post(self):
         foundUser = {}
@@ -36,9 +38,9 @@ class Login(Resource):
             @after_this_request
             def set_cookie_value(response):
                 response.set_cookie('ENCODED_TOKEN', str(
-                    encoded), max_age=COOKIES_AGE)
+                    encoded), samesite='none', secure=True, max_age=COOKIES_AGE)
                 response.set_cookie('USERNAME', str(
-                    foundUser['username']), max_age=COOKIES_AGE)
+                    foundUser['username']), samesite='none', secure=True, max_age=COOKIES_AGE)
 
                 return response
             return {'message': 'login success'}, 200
