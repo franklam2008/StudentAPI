@@ -13,10 +13,14 @@ COOKIES_AGE = 60 * 60 * 1000
 
 
 class Login(Resource):
+
     def post(self):
         foundUser = {}
-        email = request.args.get('email')
-        pw = request.args.get('password')
+      
+        formData = request.form.to_dict()
+        email = formData['email']
+        pw = formData['password']
+       
         for each in USER_LOGINS:
             if found_user(each, email, pw):
                 foundId = each["uuid"]
