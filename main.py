@@ -5,17 +5,26 @@ from flask_cors import CORS
 from resources.login import Login
 from resources.studentClass import Student
 from resources.studentsListClass import StudentsList
+from resources.whoami import Whoami
+
+cors_config = {
+    'origins': ['http://127.0.0.1:5173'],
+    'methods': ["OPTIONS", "GET", "POST", "DELETE"],
+    'allow_headers': ['Authorization', 'Content-Type'],
+    'supports_credentials': True,
+}
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r'*': cors_config})
 api = Api(app)
 
-# Add classes
+# Add Resources
 # =================================================
 
 api.add_resource(Login, '/login/')
 api.add_resource(StudentsList, '/students/')
 api.add_resource(Student, '/students/<student_id>')
+api.add_resource(Whoami, '/whoami')
 
 
 if __name__ == "__main__":
