@@ -16,11 +16,11 @@ class Login(Resource):
 
     def post(self):
         foundUser = {}
-      
+
         formData = request.form.to_dict()
         email = formData['email']
         pw = formData['password']
-       
+
         for each in USER_LOGINS:
             if found_user(each, email, pw):
                 foundId = each["uuid"]
@@ -52,8 +52,10 @@ class Login(Resource):
             # Remove Cookies if user not found
             @after_this_request
             def set_cookie_value(response):
-                response.set_cookie('ENCODED_TOKEN', '', expires=0)
-                response.set_cookie('USERNAME', '', expires=0)
+                response.set_cookie('ENCODED_TOKEN', '',
+                                    expires=0, samesite='none', secure=True)
+                response.set_cookie('USERNAME', '', expires=0,
+                                    samesite='none', secure=True)
                 return response
 
             return "Username or Password incorrect", 404
