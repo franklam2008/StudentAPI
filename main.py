@@ -24,7 +24,7 @@ api = Api(app)
 api.add_resource(Login, '/login/')
 api.add_resource(StudentsList, '/students/')
 api.add_resource(Student, '/students/<student_id>')
-api.add_resource(Whoami, '/whoami')
+api.add_resource(Whoami, '/whoami/')
 
 
 if __name__ == "__main__":
