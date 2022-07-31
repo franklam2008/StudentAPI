@@ -8,7 +8,7 @@ from resources.studentsListClass import StudentsList
 from resources.whoami import Whoami
 
 cors_config = {
-    'origins': ['http://127.0.0.1:5173'],
+    'origins': ['http://127.0.0.1:5173', 'http://localhost:5173'],
     'methods': ["OPTIONS", "GET", "POST", "DELETE"],
     'allow_headers': ['Authorization', 'Content-Type'],
     'supports_credentials': True,
